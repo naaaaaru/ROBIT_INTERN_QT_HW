@@ -39,48 +39,36 @@ void maniSimulator::drawManipulator()
     scene->clear();
 
     // 각 링크의 길이와 각도 가져오기
-    int length1 = ui->link1->value();
+    int length1 = ui->link1->value();//길이 설정
     int length2 = ui->link2->value();
     int length3 = ui->link3->value();
 
-    double angle1 = ui->joint1->value() * PI / 180.0;
+    double angle1 = ui->joint1->value() * PI / 180.0;//각도 설정
     double angle2 = ui->joint2->value() * PI / 180.0;
     double angle3 = ui->joint3->value() * PI / 180.0;
 
     // Pen 설정 (선 그리기용)
-    QPen pen(Qt::black);
-    pen.setWidth(3);
+    QPen pen(Qt::black);//색깔은 검은색, 두께는 4
+    pen.setWidth(4);
 
     // 고정된 시작점 좌표 설정
-    //int fixedX = 100;
-    //int fixedY = ui->graphicsView->height() / 2;
-    static int fixedX = 50;  // 고정된 x 좌표 (왼쪽에서 50px)
-    static int fixedY = 50;  // 고정된 y 좌표 (위쪽에서 50px)
-
+    static int fixedX = 50;
+    static int fixedY = 50;
 
     // 첫 번째 링크 끝 좌표 계산
-    double x1 = fixedX + length1 * cos(angle1);
-    double y1 = fixedY - length1 * sin(angle1);
-    QGraphicsLineItem *line1 = new QGraphicsLineItem(fixedX, fixedY, x1, y1);
+    double x1 = fixedX + length1 * cos(angle1);//시작좌표로부터 길이*cos=x좌표
+    double y1 = fixedY - length1 * sin(angle1);//시작좌표로부터 길이*sin=y좌표
+    QGraphicsLineItem *line1 = new QGraphicsLineItem(fixedX, fixedY, x1, y1);//선을 그려주는 포인터 객체 생성
     line1->setPen(pen);
     scene->addItem(line1);
 
-    // 첫 번째 조인트에 점 추가
-    QGraphicsEllipseItem *point1 = new QGraphicsEllipseItem(x1 - 3, y1 - 3, 6, 6);
-    point1->setBrush(Qt::red);
-    scene->addItem(point1);
-
     // 두 번째 링크 끝 좌표 계산
     double x2 = x1 + length2 * cos(angle1 + angle2);
+    //두번째 좌표는 첫번째 좌표로부터 증가, 첫번째 각도와 두번째 각도를 합쳐야 원하는 각도
     double y2 = y1 - length2 * sin(angle1 + angle2);
-    QGraphicsLineItem *line2 = new QGraphicsLineItem(x1, y1, x2, y2);
+    QGraphicsLineItem *line2 = new QGraphicsLineItem(x1, y1, x2, y2);//첫번째 두번째 점을 이어 선 긋기
     line2->setPen(pen);
     scene->addItem(line2);
-
-    // 두 번째 조인트에 점 추가
-    QGraphicsEllipseItem *point2 = new QGraphicsEllipseItem(x2 - 3, y2 - 3, 6, 6);
-    point2->setBrush(Qt::red);
-    scene->addItem(point2);
 
     // 세 번째 링크 끝 좌표 계산
     double x3 = x2 + length3 * cos(angle1 + angle2 + angle3);
@@ -88,6 +76,18 @@ void maniSimulator::drawManipulator()
     QGraphicsLineItem *line3 = new QGraphicsLineItem(x2, y2, x3, y3);
     line3->setPen(pen);
     scene->addItem(line3);
+
+    //점을 나중에 생성하여야 점이 위에 그려짐
+    // 첫 번째 조인트에 점 추가
+    QGraphicsEllipseItem *point1 = new QGraphicsEllipseItem(x1 - 3, y1 - 3, 6, 6);
+    //6크기의 원 그리기,중앙을 맞추기 위해 좌표 각각 -3
+    point1->setBrush(Qt::red);
+    scene->addItem(point1);
+
+    // 두 번째 조인트에 점 추가
+    QGraphicsEllipseItem *point2 = new QGraphicsEllipseItem(x2 - 3, y2 - 3, 6, 6);
+    point2->setBrush(Qt::red);
+    scene->addItem(point2);
 
     // 세 번째 조인트에 점 추가
     QGraphicsEllipseItem *point3 = new QGraphicsEllipseItem(x3 - 3, y3 - 3, 6, 6);
