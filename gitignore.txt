@@ -89,6 +89,7 @@ ui_*.h
 *.qmlc
 *.jsc
 Makefile*
+[Bb]uild/
 *build-*
 *.qm
 *.prl

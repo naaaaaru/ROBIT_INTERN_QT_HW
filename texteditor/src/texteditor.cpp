@@ -37,11 +37,11 @@ void texteditor::on_open_clicked()
 // 파일 저장 기능
 void texteditor::on_save_clicked()
 {
-    std::ofstream file(currentFile.toStdString());
+    std::ofstream file(currentFile.toStdString());//파일을 쓰기 모드로 열기
 
-    std::string content = ui->textEdit->toPlainText().toStdString();
-    file << content;
-    file.close();
+    std::string content = ui->textEdit->toPlainText().toStdString();//텍스트 편집기에 문자열 가져오기
+    file << content;//내용 입력
+    file.close();//파일 닫기
 }
 
 // 다른 이름으로 저장 기능
