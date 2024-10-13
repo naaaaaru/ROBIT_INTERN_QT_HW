@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
 
 # 프로젝트 이름과 버전 설정
-project(manisimulator VERSION 0.1 LANGUAGES CXX)
+project(keyboard VERSION 0.1 LANGUAGES CXX)
 
 # C++ 표준 설정
 set(CMAKE_CXX_STANDARD 11)
