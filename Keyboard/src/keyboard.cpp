@@ -19,6 +19,10 @@ void keyboard::appendToTextBrowser(const QString &text)
     QString currentText = ui->textBrowser->toPlainText();
     currentText.append(charToAdd);
     ui->textBrowser->setText(currentText);
+    if (isShiftPressed)
+        {
+            releaseShift();
+        }
 }
 
 void keyboard::on_num7_clicked()
