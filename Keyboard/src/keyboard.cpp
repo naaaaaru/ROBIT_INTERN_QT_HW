@@ -1,24 +1,25 @@
 #include "keyboard.h"
 #include "./ui_keyboard.h"
 
-keyboard::keyboard(QWidget *parent)
+keyboard::keyboard(QWidget *parent)//생성자,한국어,capslock(계속 대문자),shift(한번만 대문자) 포함, 처음에는 다 비활성화
     : QMainWindow(parent), ui(new Ui::keyboard),
       isKoreanMode(false), isCapsLockOn(false), isShiftPressed(false)
 {
     ui->setupUi(this);
 }
 
-keyboard::~keyboard()
+keyboard::~keyboard()//소멸자
 {
     delete ui;
 }
 
 void keyboard::appendToTextBrowser(const QString &text)
+//문자 입력함수,상태에 따라 대소문자 입력
 {
     QString charToAdd = isShiftPressed || isCapsLockOn ? text.toUpper() : text.toLower();
-    QString currentText = ui->textBrowser->toPlainText();
-    currentText.append(charToAdd);
-    ui->textBrowser->setText(currentText);
+    QString currentText = ui->textBrowser->toPlainText();//입력된 글자를 문자열로 가져옴
+    currentText.append(charToAdd);//문자열 끝에 문자 추가
+    ui->textBrowser->setText(currentText);//새로운 텍스트 설정 명령어
     if (isShiftPressed)
         {
             releaseShift();
@@ -75,7 +76,7 @@ void keyboard::on_num1_clicked()
     appendToTextBrowser("1");
 }
 
-void keyboard::on_q_clicked()
+void keyboard::on_q_clicked()//한국어이거나 영어에 따라 문제 입력
 {
     if (isKoreanMode)
     {
